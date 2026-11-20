@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Алгебра 7 класс: преобразование выражений</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF4F8;--bg2:#F1E9FF;--ink:#3A2A4D;--mute:#7A6A8C;--card:#FFFFFF;--line:#E6D7F3;--p:#E0559A;--l:#8E63D9;--m:#2BB5A0;--sun:#FFC94D;--ok:#1E9E6A;--bad:#D6455D;--okbg:#E2F7EE;--badbg:#FDE6EA;--sh:0 6px 0 #E6D7F3}
+@media(prefers-color-scheme:dark){:root{--bg:#1F1530;--bg2:#2A1B42;--ink:#F6EBFF;--mute:#BBA8D3;--card:#2D2045;--line:#463463;--p:#FF86BE;--l:#B79BFF;--m:#5ED8C4;--sun:#FFD772;--ok:#5EDDA4;--bad:#FF8FA2;--okbg:#17382F;--badbg:#431F2A;--sh:0 6px 0 #463463}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:17px/1.65 Nunito,system-ui,sans-serif;color:var(--ink);background:radial-gradient(circle at 10% 0,var(--bg2),transparent 45%),radial-gradient(circle at 95% 30%,var(--bg2),transparent 40%),var(--bg)}
+.wrap{max-width:880px;margin:0 auto;padding:0 18px}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;font-weight:600;line-height:1.2;margin:0}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:26px;align-items:center;padding:48px 0 24px}
+.hero h1{font-size:clamp(30px,6.5vw,48px);color:var(--p)}
+.hero h1 span{color:var(--l)}
+.hero p{color:var(--mute);max-width:44ch}
+.btn{display:inline-block;margin-top:10px;padding:11px 22px;border-radius:999px;background:var(--p);color:#fff;font-weight:800;text-decoration:none;box-shadow:0 5px 0 #B23A7B}
+.btn:hover{transform:translateY(2px);box-shadow:0 3px 0 #B23A7B}
+.morph{background:var(--card);border-radius:24px;padding:20px;box-shadow:var(--sh);border:2px solid var(--line);font-family:Fredoka,sans-serif;font-size:22px;text-align:center}
+.morph div{padding:7px 0}.morph small{display:block;font:600 13px Nunito,sans-serif;color:var(--mute)}
+.morph .arr{color:var(--l);font-size:18px}.morph .fin{color:var(--m);font-size:30px}
+section{padding:26px 0}
+h2{font-size:clamp(24px,4.5vw,32px);margin-bottom:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:var(--card);border-radius:20px;border:2px solid var(--line);box-shadow:var(--sh);padding:16px 18px}
+.card h3{font-size:19px;margin-bottom:6px}
+.card:nth-child(1) h3{color:var(--p)}.card:nth-child(2) h3{color:var(--l)}.card:nth-child(3) h3{color:var(--m)}.card:nth-child(4) h3{color:#E08A00}
+.f{display:block;font:800 18px/1.7 Nunito,sans-serif;background:var(--bg);border-radius:10px;padding:2px 12px;margin:6px 0}
+.ex{color:var(--mute);font-size:15px}
+.tip{background:var(--card);border-radius:16px;border:2px dashed var(--l);padding:10px 16px;margin-top:18px}
+.bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;background:var(--bg);padding:10px 0;font-weight:800}
+.track{flex:1;height:14px;background:var(--line);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--p),var(--l));border-radius:99px;transition:width .4s}
+.lv{margin:22px 0 10px;display:flex;align-items:center;gap:10px}
+.lv i{font-style:normal;padding:2px 14px;border-radius:99px;color:#fff;font:600 16px Fredoka,sans-serif}
+.task{background:var(--card);border:2px solid var(--line);box-shadow:var(--sh);border-radius:20px;padding:16px 18px;margin-bottom:18px}
+.task .n{font-family:Fredoka,sans-serif;color:var(--l);font-size:15px}
+.task p{margin:4px 0 12px;font-size:18px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.opts button{font:800 17px Nunito,sans-serif;padding:11px 12px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;text-align:left}
+.opts button:hover:not(:disabled){border-color:var(--p);transform:translateY(-2px)}
+.opts button:focus-visible,.hint:focus-visible,.reset:focus-visible,.btn:focus-visible{outline:3px solid var(--l);outline-offset:2px}
+.opts .right{background:var(--okbg);border-color:var(--ok)}.opts .wrong{background:var(--badbg);border-color:var(--bad)}
+.hint,.reset{font:800 15px Nunito,sans-serif;margin-top:10px;padding:6px 14px;border-radius:99px;border:2px solid var(--l);background:transparent;color:var(--l);cursor:pointer}
+.hbox,.sol{display:none;margin-top:10px;padding:10px 14px;border-radius:14px}
+.hbox{background:#FFF3CC;color:#5A4300}
+.sol{background:var(--bg);border:2px dashed var(--line)}
+.on{display:block}.sol b.v{color:var(--ok)}
+.msg{font-weight:800;margin-bottom:6px}
+.done{display:none;text-align:center;padding:20px;border-radius:20px;background:var(--card);border:2px solid var(--p);margin-top:10px}
+footer{text-align:center;color:var(--mute);padding:20px 0 50px;font-size:15px}
+@media(max-width:700px){.hero{grid-template-columns:1fr;padding-top:26px}}
+@media(prefers-reduced-motion:no-preference){.fin{animation:pop 2s ease-in-out infinite alternate}@keyframes pop{to{transform:scale(1.12)}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<div>
+<h1>Преобразование <span>выражений</span></h1>
+<p>Учимся упрощать выражения: раскрывать скобки, приводить подобные, выносить общий множитель и использовать формулы. Сначала теория, потом 6 задач трёх уровней.</p>
+<a class="btn" href="#zadachi">К задачам ✨</a>
+</div>
+<div class="morph" aria-label="Пример упрощения">
+<small>Было</small><div>2(x + 3) − x</div><div class="arr">↓ раскрыли скобки</div><div>2x + 6 − x</div><div class="arr">↓ привели подобные</div><div class="fin">x + 6</div>
+</div>
+</header>
+
+<section id="teoriya">
+<h2>Теория</h2>
+<div class="cards">
+<div class="card"><h3>Приведение подобных</h3>Подобные слагаемые отличаются только числовым множителем. Складываем коэффициенты, буквы остаются.
+<span class="f">5a + 3a = 8a</span><span class="ex">5x − x + 2 = 4x + 2 (у x стоит коэффициент 1)</span></div>
+<div class="card"><h3>Раскрытие скобок</h3>Множитель перед скобкой умножаем на каждое слагаемое. Минус перед скобкой меняет все знаки внутри.
+<span class="f">a(b + c) = ab + ac</span><span class="f">−(x − 4) = −x + 4</span></div>
+<div class="card"><h3>Вынесение общего множителя</h3>Находим общее у всех слагаемых (число и буквы) и выносим за скобку.
+<span class="f">6x² − 9x = 3x(2x − 3)</span><span class="ex">Проверка: раскрой скобки, должно получиться исходное.</span></div>
+<div class="card"><h3>Формулы сокращённого умножения</h3>
+<span class="f">(a + b)² = a² + 2ab + b²</span><span class="f">(a − b)² = a² − 2ab + b²</span><span class="f">a² − b² = (a − b)(a + b)</span></div>
+</div>
+<div class="tip"><b>💡 Совет.</b> Перед ответом проверь: подставь любое число вместо буквы в исходное выражение и в ответ. Если результаты равны, всё верно.</div>
+</section>
+
+<section id="zadachi">
+<h2>Задачи</h2>
+<div class="bar"><span id="sc">0 / 6</span><div class="track"><div class="fill" id="fl"></div></div></div>
+<div id="list"></div>
+<div class="done" id="done"><h3 id="dt"></h3><button class="reset" onclick="reset()">Пройти заново</button></div>
+</section>
+<footer>Сделано с любовью к математике 🌸</footer>
+</div>
+
+<script>
+const G=[["Лёгкий","var(--m)"],["Средний","var(--l)"],["Сложный","var(--p)"]];
+const T=[
+{g:0,q:"Упростите выражение: 4x + 7 − x + 2",o:["3x + 9","5x + 9","3x + 5","12x"],a:0,h:"Сложи отдельно слагаемые с x и отдельно числа. У x в «− x» коэффициент −1.",s:"Подобные с x: 4x − x = 3x.<br>Числа: 7 + 2 = 9.<br>Ответ: <b class='v'>3x + 9</b>.<br>Вариант 5x + 9 получается, если забыть про минус у x."},
+{g:0,q:"Раскройте скобки и упростите: 2(x − 3) + 4",o:["2x − 2","2x + 1","2x − 10","−x + 1"],a:0,h:"Умножь 2 на оба слагаемых в скобке: и на x, и на −3.",s:"2(x − 3) = 2x − 6.<br>Прибавляем 4: 2x − 6 + 4 = <b class='v'>2x − 2</b>.<br>2x + 1 получится, если умножить 2 только на x и забыть про −3."},
+{g:1,q:"Упростите: (x + 4)² − 8x",o:["x² + 16","x² + 8x + 16","x² − 16","x² + 16x"],a:0,h:"Сначала раскрой квадрат суммы по формуле, потом приведи подобные.",s:"(x + 4)² = x² + 2·x·4 + 16 = x² + 8x + 16.<br>Вычитаем 8x: x² + 8x + 16 − 8x = <b class='v'>x² + 16</b>.<br>Помни: (x + 4)² не равно x² + 16, средний член 8x обязателен, он просто потом сократился."},
+{g:1,q:"Разложите на множители: 6x²y − 9xy²",o:["3xy(2x − 3y)","3xy(2x + 3y)","3xy(2x − 6y)","6xy(x − y)"],a:0,h:"Найди наибольший общий делитель чисел 6 и 9, а потом общие буквы в наименьших степенях.",s:"НОД(6; 9) = 3. Общие буквы: x (степени 2 и 1, берём 1) и y (1 и 2, берём 1). Общий множитель: 3xy.<br>6x²y : 3xy = 2x, 9xy² : 3xy = 3y.<br>Ответ: <b class='v'>3xy(2x − 3y)</b>.<br>Проверка: 3xy · 2x = 6x²y, 3xy · 3y = 9xy². Сходится."},
+{g:2,q:"Разложите на множители: x² − 6x + 9 − y²",o:["(x − 3 − y)(x − 3 + y)","(x − 3 − y)(x + 3 + y)","(x − 9 − y)(x − 1 + y)","(x − 3)² + y²"],a:0,h:"Первые три слагаемых это квадрат разности. Потом останется разность квадратов.",s:"x² − 6x + 9 = (x − 3)².<br>Получаем (x − 3)² − y² — разность квадратов a² − b², где a = x − 3, b = y.<br>(a − b)(a + b) = <b class='v'>(x − 3 − y)(x − 3 + y)</b>.<br>Проверка при x = 4, y = 1: исходное 16 − 24 + 9 − 1 = 0; ответ (0)(2) = 0. Верно."},
+{g:2,q:"Найдите значение выражения (2a − b)² − (2a + b)² при a = 0,5 и b = −3",o:["12","−12","24","0"],a:0,h:"Не спеши подставлять. Сначала упрости: это разность квадратов или раскрой оба квадрата.",s:"Раскроем: (4a² − 4ab + b²) − (4a² + 4ab + b²) = −8ab.<br>Подставляем: −8 · 0,5 · (−3) = −4 · (−3) = <b class='v'>12</b>.<br>Проверка прямой подстановкой: (1 + 3)² − (1 − 3)² = 16 − 4 = 12. Совпало."}
+];
+let done={};const list=document.getElementById("list");
+function upd(){const n=Object.keys(done).length,r=Object.values(done).filter(Boolean).length;
+document.getElementById("sc").textContent="🌸 "+r+" / "+T.length;
+document.getElementById("fl").style.width=(n/T.length*100)+"%";
+const d=document.getElementById("done");
+if(n===T.length){d.style.display="block";document.getElementById("dt").textContent=r===T.length?"Отлично! Все 6 верно 🎉":"Ты решила "+r+" из "+T.length+". Загляни в разборы и попробуй ещё раз ✨"}else d.style.display="none"}
+function draw(){list.innerHTML="";let last=-1,c=0;
+T.forEach((t,i)=>{
+if(t.g!==last){last=t.g;const h=document.createElement("div");h.className="lv";h.innerHTML='<i style="background:'+G[t.g][1]+'">'+G[t.g][0]+'</i>';list.appendChild(h);c=0}
+c++;const d=document.createElement("article");d.className="task";
+d.innerHTML='<div class="n">Задача '+(i+1)+'</div><p>'+t.q+'</p><div class="opts"></div><button class="hint">💡 Подсказка</button><div class="hbox">'+t.h+'</div><div class="sol"><div class="msg"></div><b>Решение.</b><br>'+t.s+'</div>';
+const ob=d.querySelector(".opts"),sol=d.querySelector(".sol"),msg=d.querySelector(".msg");
+d.querySelector(".hint").onclick=()=>d.querySelector(".hbox").classList.toggle("on");
+const show=k=>{[...ob.children].forEach((b,m)=>{b.disabled=true;if(m===t.a)b.classList.add("right");else if(m===k)b.classList.add("wrong")});sol.classList.add("on");msg.textContent=k===t.a?"Верно! 🌟":"Не совсем. Давай разберём 🌷"};
+t.o.forEach((o,k)=>{const b=document.createElement("button");b.textContent="ABCD"[k]+") "+o;b.onclick=()=>{if(i in done)return;done[i]=k===t.a;show(k);upd()};ob.appendChild(b)});
+if(i in done)show(done[i]?t.a:-1);
+list.appendChild(d)});upd()}
+function reset(){done={};draw();document.getElementById("zadachi").scrollIntoView()}
+draw();
+</script>
+</body>
+</html>
